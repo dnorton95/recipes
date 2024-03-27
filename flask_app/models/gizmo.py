@@ -100,7 +100,8 @@ class Gizmo:
     
     @classmethod
     def find_by_id_with_user(cls, gizmo_id):
-        query = """SELECT * FROM gizmos JOIN users ON gizmos.user_id = users.id WHERE gizmos.id = %(gizmo_id)s"""
+        query = """SELECT * FROM gizmos JOIN users ON gizmos.user_id = users.id 
+        WHERE gizmos.id = %(gizmo_id)s"""
 
         data = {"gizmo_id": gizmo_id}
         list_of_dicts = connectToMySQL(Gizmo.DB).query_db(query, data)
@@ -126,7 +127,8 @@ class Gizmo:
         query = """INSERT INTO gizmos
         (column1, column2, column3, column4, column5, user_id)
         VALUES
-        (%(column1)s, %(column2)s, %(column3)s, %(column4)s, %(column5)s, %(user_id)s,)"""
+        (%(column1)s, %(column2)s, %(column3)s, %(column4)s, %(column5)s, 
+        %(user_id)s,)"""
         gizmo_id = connectToMySQL(Gizmo.DB).query_db(query, form_data)
         return gizmo_id
     
