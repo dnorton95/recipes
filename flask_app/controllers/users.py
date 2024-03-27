@@ -1,7 +1,7 @@
 # This will be in your controllers folder.  Remember to 'pipenv install flask pymysql flask_bcrypt' in your main project folder!
 from flask_app import app, bcrypt
-from flask import flash, render_template, redirect, request, session
 from flask_app.models.user import User
+from flask import flash, render_template, redirect, request, session
 
 # Replace all "Users/user" with your class name!
 
@@ -29,18 +29,9 @@ def register():
         "email": request.form["email"],
         "password": hashed_pw,
     }
-    user_id = User.create(user_data)
+    user_id = User.register(user_data)
     session["user_id"] = user_id
-    return redirect("/users/dashboard")
-
-
-@app.get("/users/dashboard")
-def dashboard():
-    if "user_id" not in session:
-        flash("You must be logged in to view that page.", "login")
-        return redirect("/")
-    user = User.find_by_id({session["user_id"]})
-    return render_template("dashboard.html", user=user)
+    return redirect("/gizmos/all")
 
 
 @app.post("/users/login")
@@ -59,7 +50,7 @@ def login():
         return redirect("/")
 
     session["user_id"] = user.id
-    return redirect("/users/dashboard")
+    return redirect("/gizmos/all")
 
 
 @app.route("/users/logout")

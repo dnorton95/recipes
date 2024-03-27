@@ -1,4 +1,4 @@
-# Replace all Users with your class name/table name where necessary and replace the DB field with database name!
+# Replace all gizmos with the proper name as well as the DB name!
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
 import re
@@ -8,7 +8,7 @@ PASSWORD_REGEX = re.compile(r"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}
 
 
 class User:
-    DB = "users_db"  # Database name goes here!
+    DB = "test_db"  # Database name goes here!
 
     def __init__(self, data):
         self.id = data["id"]
@@ -18,6 +18,7 @@ class User:
         self.password = data["password"]
         self.created_at = data["created_at"]
         self.updated_at = data["updated_at"]
+        self.gizmos = []
 
     @staticmethod
     def validate_register(user):
@@ -79,7 +80,7 @@ class User:
         return is_valid
 
     @classmethod
-    def create(cls, data):
+    def register(cls, data):
         query = """INSERT INTO users (first_name, last_name, email, password, 
         created_at, updated_at) VALUES ( %(first_name)s, %(last_name)s, %(email)s, 
         %(password)s, NOW(), NOW());"""
@@ -106,4 +107,33 @@ class User:
         if len(results) == 0:
             return None
         user = User(results[0])
+        return user
+
+    @classmethod
+    def find_by_id_with_gizmos(cls, user_id):
+        query = """SELECT * FROM users LEFT JOIN gizmos ON users.id = 
+        gizmos.user_id WHERE users.id = %(user_id)s"""
+        data = {"user_id": user_id}
+        list_of_dicts = connectToMySQL(User.DB).query_db(query, data)
+
+        if len(list_of_dicts) == 0:
+            return None
+        
+        user = User(list_of_dicts[0])
+        for each_dict in list_of_dicts:
+            if each_dict["gizmos.id"] != None:
+                gizmo_data = {
+                    "id": each_dict["gizmos.id"],
+                    "column1": each_dict["column1"],
+                    "column1": each_dict["column1"],
+                    "column1": each_dict["column1"],
+                    "column1": each_dict["column1"],
+                    "column1": each_dict["column1"],
+                    "created_at": each_dict["gizmos.created_at"],
+                    "updated_at": each_dict["gizmos.updated_at"],
+                    "user_id": each_dict["user_id"],
+                }
+                gizmo = gizmo.Gizmo(gizmo_data)
+                user.gizmos.append(gizmo)
+
         return user

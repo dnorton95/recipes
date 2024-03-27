@@ -1,5 +1,5 @@
 from flask_app import app
-form flask_app.models.gizmo import Gizmo
+from flask_app.models.gizmo import Gizmo
 from flask_app.models.user import User
 from flask import flash, render_template, redirect, request, session
 
