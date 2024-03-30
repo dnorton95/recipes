@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Recipes</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+  </head>
+  <body class="pr-3 pl-3 quicksand">
+    <div class="mr-5 ml-5 mt-1 d-flex-end fs-header-medium fc-dark-pink">
+        <div class="quicksand grow-xsmall">
+          <a class="add-btn" href="/recipes/all">Return to All Recipes</a>
+        </div>
+        <div class="ml-2">
+          <form role="logout" action="/users/logout">
+            <button class="grow-xsmall submit quicksand" type="submit">Log Out</button>
+          </form>
+      </div>
+    </div>
+    <div class="d-flex-column d-flex-center">
+      <div class="neg-mt-3 d-flex-center d-flex-column">
+        {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
+                            {% if messages %}                            <!-- check if there are any messages -->
+                                {% for message in messages %}            <!-- loop through the messages -->
+                        <p>{{message}}<span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span> </p>                   <!-- display each message in a paramraph tag -->
+                                {% endfor %}
+                {% endif %}
+            {% endwith %}
+      </div>
+      <div class="pr-2 pl-2 recipe-block mt-4 d-flex-center d-flex-column">
+        <h1 class="recipe-block-header fs-header-large">{{recipe.name}}!</h1>
+        <p class="fs-header-medium neg-mb-1">Description:</p>
+        <p>{{recipe.description}}</p>
+        <p class="fs-header-medium neg-mb-1">Instructions</p>
+        <p>{{recipe.instructions}}</p>
+        <p class="fs-header-medium neg-mb-1">Date Cooked</p>
+        <p>{{recipe.date_cooked}}</p>
+        <p class="fs-header-medium neg-mb-1">30 minutes or less?</p>
+        <p>{{recipe.thirty_min}}</p>
+      </div>
+  </div>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit recipes</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+</head>
+<body class="quicksand">
+    <div class="mr-5 ml-5 mt-1 d-flex-end fs-header-medium fc-dark-pink">
+        <div class="quicksand grow-xsmall">
+          <a class="add-btn" href="/recipes/all">Return to All Recipes</a>
+        </div>
+        <div class="ml-2">
+          <form role="logout" action="/users/logout">
+            <button class="grow-xsmall submit quicksand" type="submit">Log Out</button>
+          </form>
+      </div>
+    </div>
+    <div class="small-d-flex-column d-flex-around push-in">
+        <div class="d-flex-center d-flex-column">
+            <form class="p-5 border d-flex-center d-flex-column" action="/recipes/update" method="POST">
+                <h2 class="neg-mt-1">Edit {{ recipe.name}}:</h2>
+                <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
+                <label for="name">Recipe Name:</label>
+                <input class="input-shade border" type="text" id="name" name="name">
+                <label class="mt-1" for="description">Description:</label>
+                <textarea class="input-shade border" id="description" name="description"></textarea>
+                <label class="mt-1" for="instructions">Instructions:</label>
+                <textarea class="input-shade border" id="instructions" name="instructions"></textarea>
+                <label class="mt-1" for="date_cooked">Date Cooked:</label>
+                <input class="input-shade border" type="date" id="date_cooked" name="date_cooked">
+                <label class="mt-1" for="thirty_min">30 Minutes or Less?:</label>
+                <div>
+                    <input class="grow-small input-shade border" type="radio" id="thirty_min_yes" name="thirty_min" value="yes">
+                    <label class="mr-1" for="thirty_min_yes">Yes</label>
+                    <input class="ml-1 grow-small input-shade border" type="radio" id="thirty_min_no" name="thirty_min" value="no">
+                    <label for="thirty_min_no">No</label>
+                </div>
+                <input class="grow-small submit mt-1" type="submit" value="Submit">
+            </form>
+        </div>
+</body>
+</html>

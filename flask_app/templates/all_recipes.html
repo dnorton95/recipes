@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Recipes</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+  </head>
+  <body class="pr-3 pl-3 quicksand">
+    <div class="mr-5 ml-5 mt-1 d-flex-between fs-header-medium fc-offwhite">
+        <div class="flex2">
+          <h1 class="fs-header-large">Welcome, {{user.first_name}}!</h1>
+        </div>
+        <div class="quicksand grow-small">
+          <a class="add-btn" href="/recipes/new">Add Recipe</a>
+        </div>
+        <div class="ml-2">
+          <form role="logout" action="/users/logout">
+            <button class="grow-small submit quicksand" type="submit">Log Out</button>
+          </form>
+      </div>
+    </div>
+    <div class="d-flex-column">
+      <div class="fc-khaki text-center">
+        <h2>All Recipes</h2>
+      </div>
+      <div class="neg-mt-3 d-flex-center d-flex-column">
+        {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
+                            {% if messages %}                            <!-- check if there are any messages -->
+                                {% for message in messages %}            <!-- loop through the messages -->
+                        <p>{{message}}<span class="grow-small ml-2 close-btn" onclick="this.parentElement.style.display='none';">&times;</span> </p>                   <!-- display each message in a paramraph tag -->
+                                {% endfor %}
+                {% endif %}
+            {% endwith %}
+      </div>
+      <div class="mr-4 ml-4 d-flex-center d-flex-column">
+        <table class="table-border">
+          <thead>
+              <tr>
+                  <th>Name</th>
+                  <th>30 Minutes or Less?</th>
+                  <th>User</th>
+                  <th>Actions</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for recipe in recipes %}
+                  <tr>
+                      <td>{{ recipe.name }}</td>
+                      <td>{{ recipe.thirty_min }}</td>
+                      <td>{{ recipe.user.first_name }} {{ recipe.user.last_name }}</td>
+                      <td class="d-flex-between">
+                          {% if recipe.user_id != user.id %}
+                              <a class="mr-2" href="/recipes/{{ recipe.id }}">View Recipe</a>
+                          {% else %}
+                              <a class="mr-2" href="/recipes/{{ recipe.id }}">View Recipe</a>
+                              <a class="mr-2" href="/recipes/{{ recipe.id }}/edit">Edit</a>
+                              <form action="/recipes/{{ recipe.id }}/delete" method="POST">
+                                <!-- Add any necessary hidden fields or additional form elements here -->
+                                <button class="hidden-btn" type="submit">Delete Recipe</button>
+                            </form>
+                          {% endif %}
+                      </td>
+                  </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+      </div>
+  </div>
+  </body>
+</html>

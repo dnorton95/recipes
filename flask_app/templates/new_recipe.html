@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Recipe</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+</head>
+<body class="quicksand">
+    <div>
+        <div class="d-flex-center fc-white">
+            <h1>Add a Recipe!</h1>
+        </div>
+        <div class="d-flex-center d-flex-column">
+            <form class="p-2 border d-flex-center d-flex-column" action="/recipes/create" method="POST">
+                <h2 class="neg-mt-1">Recipe Creator:</h2>
+                <label for="name">Recipe Name:</label>
+                <input class="input-shade border" type="text" id="name" name="name">
+                <label class="mt-1" for="description">Description:</label>
+                <textarea class="input-shade border" id="description" name="description"></textarea>
+                <label class="mt-1" for="instructions">Instructions:</label>
+                <textarea class="input-shade border" id="instructions" name="instructions"></textarea>
+                <label class="mt-1" for="date_cooked">Date Cooked:</label>
+                <input class="input-shade border" type="date" id="date_cooked" name="date_cooked">
+                <label class="mt-1" for="thirty_min">30 Minutes or Less?:</label>
+                <div>
+                    <input class="grow-small input-shade border" type="radio" id="thirty_min_yes" name="thirty_min" value="yes">
+                    <label class="mr-1" for="thirty_min_yes">Yes</label>
+                    <input class="ml-1 grow-small input-shade border" type="radio" id="thirty_min_no" name="thirty_min" value="no">
+                    <label for="thirty_min_no">No</label>
+                </div>
+                <input type="hidden" name="user_id" value="{{ user.id }}">
+                <input class="grow-small submit mt-1" type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
