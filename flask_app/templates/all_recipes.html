@@ -15,11 +15,11 @@
           <h1 class="fs-header-large">Welcome, {{user.first_name}}!</h1>
         </div>
         <div class="quicksand grow-small">
-          <a class="add-btn" href="/recipes/new">Add Recipe</a>
+          <a class="move-btn-1" href="/recipes/new">Add Recipe</a>
         </div>
         <div class="ml-2">
           <form role="logout" action="/users/logout">
-            <button class="grow-small submit quicksand" type="submit">Log Out</button>
+            <button class="grow-small submit-btn1 quicksand" type="submit">Log Out</button>
           </form>
       </div>
     </div>
@@ -58,7 +58,7 @@
                           {% else %}
                               <a class="mr-2" href="/recipes/{{ recipe.id }}">View Recipe</a>
                               <a class="mr-2" href="/recipes/{{ recipe.id }}/edit">Edit</a>
-                              <form action="/recipes/{{ recipe.id }}/delete" method="POST">
+                              <form class="delete-recipe-form" action="/recipes/{{ recipe.id }}/delete" method="POST">
                                 <!-- Add any necessary hidden fields or additional form elements here -->
                                 <button class="hidden-btn" type="submit">Delete Recipe</button>
                             </form>
@@ -70,5 +70,30 @@
       </table>
       </div>
   </div>
+  <script>
+    document.querySelectorAll('.delete-recipe-form').forEach(form => {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission behavior
+            let formData = new FormData(form);
+            fetch(form.action, {
+                method: form.method,
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Optional: Provide feedback to the user (e.g., show a success message)
+                    console.log('Recipe deleted successfully');
+                    // Remove the table row corresponding to the deleted recipe
+                    form.closest('tr').remove();
+                } else {
+                    // Optional: Handle errors (e.g., show an error message)
+                    console.error('Failed to delete recipe');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+</script>
+
   </body>
 </html>

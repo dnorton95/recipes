@@ -7,7 +7,7 @@ EMAIL_REGEX = re.compile(r"^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$")
 PASSWORD_REGEX = re.compile(r"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$")
 
 
-class User_class:
+class User:
     DB = "recipes_schema"  # Database name goes here!
 
     def __init__(self, data):
@@ -96,7 +96,7 @@ class User_class:
         results = connectToMySQL(cls.DB).query_db(query, data)
         if len(results) == 0:
             return None
-        user = User_class(results[0])
+        user = User(results[0])
         return user
 
     @classmethod
@@ -106,7 +106,7 @@ class User_class:
         results = connectToMySQL(cls.DB).query_db(query, data)
         if len(results) == 0:
             return None
-        user = User_class(results[0])
+        user = User(results[0])
         return user
 
     @classmethod
@@ -114,12 +114,12 @@ class User_class:
         query = """SELECT * FROM users LEFT JOIN recipes ON users.id = 
         recipes.user_id WHERE users.id = %(user_id)s"""
         data = {"user_id": user_id}
-        list_of_dicts = connectToMySQL(User_class.DB).query_db(query, data)
+        list_of_dicts = connectToMySQL(User.DB).query_db(query, data)
 
         if len(list_of_dicts) == 0:
             return None
         
-        user = User_class(list_of_dicts[0])
+        user = User(list_of_dicts[0])
         for each_dict in list_of_dicts:
             if each_dict["recipes.id"] != None:
                 recipe_input_data = {
@@ -133,7 +133,7 @@ class User_class:
                     "updated_at": each_dict["recipes.updated_at"],
                     "user_id": each_dict["user_id"],
                 }
-                recipe = recipe.Recipe_class(recipe_input_data)
+                recipe = recipe.Recipe(recipe_input_data)
                 user.recipes.append(recipe)
 
         return user
