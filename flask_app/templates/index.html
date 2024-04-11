@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recipe Book</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,47 +11,58 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Caprasimo&family=Great+Vibes&family=Righteous&family=Shrikhand&family=Silkscreen:wght@400;700&family=WindSong:wght@400;500&display=swap" rel="stylesheet">
-  </head>
-
-  <style>
-    .login-container {
-        border-style: solid;
-        border-radius: 15px;
-        border-color: yellow;
-        background-image: url("{{ url_for('static', filename='assets/cookbook_photo.jpeg') }}");
-        background-size: contain;
-    }
-</style>
-
-  <body class="shrikhand-regular">
+    <style>
+        .login-container {
+            border-style: solid;
+            border-radius: 15px;
+            border-color: yellow;
+            background-image: url("{{ url_for('static', filename='assets/cookbook_photo.jpeg') }}");
+            background-size: contain;
+        }
+    </style>
+</head>
+<body class="shrikhand-regular">
     <!-- HEADER -->
-    <div class="top-header neg-mb-5 great-vibes-regular d-flex-center">
-        <h1 class="neg-mb-2 fc-yellow ml-5">The Modern Times</h1>
-    </div>
-    <div class="bottom-header caprasimo-regular d-flex-center">
-        <h2 class="ml-5">Community Cookbook</h2>
+    <div id="header">
+        <div class="top-header neg-mb-5 great-vibes-regular d-flex-center">
+            <h1 class="neg-mb-2 fc-yellow">The Modern Times</h1>
+        </div>
+        <div class="bottom-header caprasimo-regular d-flex-center">
+            <h2>Community Cookbook</h2>
+        </div>
     </div>
     <!-- HEADER -->
 
     <!-- FLASH -->
     <div class="neg-mt-3 d-flex-center d-flex-column">
-        {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
-                            {% if messages %}                            <!-- check if there are any messages -->
-                                {% for message in messages %}            <!-- loop through the messages -->
-                            <p>{{message}}<span class="grow-small ml-2 close-btn" onclick="this.parentElement.style.display='none';">&times;</span> </p>                   <!-- display each message in a paramraph tag -->
-                                {% endfor %}
-                {% endif %}
-            {% endwith %}
+        {% with messages = get_flashed_messages() %}
+        <!-- declare a variable called messages -->
+        {% if messages %}
+        <!-- check if there are any messages -->
+        {% for message in messages %}
+        <!-- loop through the messages -->
+        <p>{{message}}<span class="grow-small ml-2 close-btn" onclick="this.parentElement.style.display='none';">&times;</span> </p>
+        <!-- display each message in a paramraph tag -->
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
     </div>
     <!-- FLASH -->
 
     <!-- BODY -->
     <div class="body-container double-border">
         <div class="double-border">
-            <div class= "login-container mt-5 small-d-flex-column d-flex-around">
-                <!-- REG -->
-                <div class="mlp4 flex1 d-flex-center d-flex-column">
-                    <form class="p-2 border1 d-flex-center d-flex-column" action="/users/register" method="POST">
+            <div class="login-container mt-5 d-flex-column d-flex-around">
+                <!-- Welcome Box -->
+                <div id="welcomeBox" class="border1 mlp4 mrp4 p-3 flex1 d-flex-center d-flex-column">
+                    <h2 class="neg-mt-1">Welcome!</h2>
+                    <p class="fs-medium">Would you like to login, or register for a new account?</p>
+                    <button id="loginBtn" class="grow-small submit-btn1 mt-1">Login</button>
+                    <button id="registerBtn" class="grow-small submit-btn1 mt-1">Register</button>
+                </div>
+                <!-- Register Form -->
+                <div id="registerForm" class="border1 mlp4 mrp4 mb-2 mt-2 flex1 text-center d-flex-center d-flex-column" style="display: none;">
+                    <form class="p-2 d-flex-center d-flex-column" action="/users/register" method="POST">
                         <h2 class="neg-mt-1">Register:</h2>
                         <label for="first_name">First Name:</label>
                         <input class="input-shade border" type="text" id="first_name" name="first_name">
@@ -64,38 +75,57 @@
                         <div id="passwordAlert" style="margin-top: 2px; font-size: 8px; background-color: white; position: relative; display: none; color: red;"></div>
                         <label class="gt-1" for="password_confirm">Confirm Password:</label>
                         <input class="input-shade border" type="password" id="password_confirm" name="password_confirm">
-                        <input class="grow-small submit-btn1 mt-1" type="submit" value="Submit">
+                        <input class="grow-small mrp1 mlp1 submit-btn1 mt-1 neg-mb-1" type="submit" value="Submit">
                     </form>
+                    <button class="pb-1 close-btn" onclick="closeForm('registerForm')">Close</button>
                 </div>
-                <!-- REG -->
-                <!-- LOGIN -->
-                <div class="mrp4 flex1 d-flex-column d-flex-center">
-                    <form class="p-3 border1 d-flex-column d-flex-center" action="/users/login" method="POST">
+                <!-- Login Form -->
+                <div id="loginForm" class="border1 mrp4 mlp4 mtp2 mbp2 flex1 d-flex-column d-flex-center" style="display: none;">
+                    <form class="p-3 d-flex-column d-flex-center" action="/users/login" method="POST">
                         <h2 class="neg-mt-1">Log In:</h2>
                         <label for="email">Email:</label>
                         <input class="input-shade border" type="text" id="email" name="email">
                         <label for="password">Password:</label>
                         <input class="input-shade border" type="password" id="password" name="password">
-                        <input class="grow-small mt-1 submit-btn1" type="submit" value="Submit">
+                        <input class="grow-small mt-1 neg-mb-2 submit-btn1" type="submit" value="Submit">
                     </form>
+                    <button class="pb-2 close-btn" onclick="closeForm('loginForm')">Close</button>
                 </div>
-                <!-- LOGIN -->
             </div>
         </div>
     </div>
     <!-- BODY -->
     <script>
-        document.getElementById('password').addEventListener('focus', function() {
-            // Get the password input element
-            var passwordInput = document.getElementById('password');
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get elements
+            var welcomeBox = document.getElementById('welcomeBox');
+            var loginForm = document.getElementById('loginForm');
+            var registerForm = document.getElementById('registerForm');
+            var loginBtn = document.getElementById('loginBtn');
+            var registerBtn = document.getElementById('registerBtn');
 
-            // Display alert message if password length is less than 8 characters
-            if (passwordInput.value.length < 8) {
-                document.getElementById('passwordAlert').innerHTML = "Password must be at least 8 characters<br>long and contain at least one number.";
-                document.getElementById('passwordAlert').style.display = 'block';
-            } else {
-                document.getElementById('passwordAlert').style.display = 'none';
-            }
+            // Add event listeners
+            loginBtn.addEventListener('click', function() {
+                welcomeBox.style.display = 'none';
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+            });
+
+            registerBtn.addEventListener('click', function() {
+                welcomeBox.style.display = 'none';
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+            });
+        });
+        function closeForm(formId) {
+        var form = document.getElementById(formId);
+        form.style.display = 'none';
+        // Display the welcome box again
+        document.getElementById('welcomeBox').style.display = 'flex';
+    }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get elements and add event listeners as before...
         });
     </script>
 </body>
