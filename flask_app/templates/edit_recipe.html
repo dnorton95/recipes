@@ -8,39 +8,56 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Caprasimo&family=Great+Vibes&family=Righteous&family=Shrikhand&family=Silkscreen:wght@400;700&family=WindSong:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body class="quicksand">
-    <div class="mr-5 ml-5 mt-1 d-flex-end fs-header-medium fc-dark-pink">
-        <div class="quicksand grow-xsmall">
-          <a class="add-btn" href="/recipes/all">Return to All Recipes</a>
-        </div>
-        <div class="ml-2">
-          <form role="logout" action="/users/logout">
-            <button class="grow-xsmall submit quicksand" type="submit">Log Out</button>
-          </form>
-      </div>
-    </div>
+<body class="shrikhand-regular">
+          <!-- HEADER -->
+          <div class="d-flex-between">
+            <div class="">
+              <div class="top-header neg-mb-5 great-vibes-regular d-flex-center">
+                <h1 class="neg-mb-2 fc-yellow ml-5">The Modern Times</h1>
+                    </div>
+                    <div class="bottom-header caprasimo-regular d-flex-center">
+                <h2 class="ml-5">Community Cookbook</h2>
+                    </div>
+            </div>
+            
+              <div class="d-flex-around mrp1">
+                <div class=" wiggle">
+                    <a class="move-btn-1" href="/recipes/all">All Recipes</a>
+                </div>
+                <div class="ml-2">
+                  <form role="logout" action="/users/logout">
+                   <button class="wiggle submit-btn1 " type="submit">Log Out</button>
+                  </form>
+                </div>
+              </div>
+          </div>
+        <!-- HEADER -->
+
     <div class="small-d-flex-column d-flex-around push-in">
         <div class="d-flex-center d-flex-column">
-            <form class="p-5 border d-flex-center d-flex-column" action="/recipes/update" method="POST">
+            <form class="p-5 border1 d-flex-center d-flex-column" action="/recipes/update" method="POST">
                 <h2 class="neg-mt-1">Edit {{ recipe.name}}:</h2>
                 <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
                 <label for="name">Recipe Name:</label>
-                <input class="input-shade border" type="text" id="name" name="name">
+                <input class="input-shade border" type="text" id="name" name="name" value="{{ recipe.name }}">
                 <label class="mt-1" for="description">Description:</label>
-                <textarea class="input-shade border" id="description" name="description"></textarea>
+                <textarea class="input-shade border" id="description" name="description">{{ recipe.description }}</textarea>
                 <label class="mt-1" for="instructions">Instructions:</label>
-                <textarea class="input-shade border" id="instructions" name="instructions"></textarea>
+                <textarea class="input-shade border" id="instructions" name="instructions">{{recipe.instructions}}</textarea>
                 <label class="mt-1" for="date_cooked">Date Cooked:</label>
-                <input class="input-shade border" type="date" id="date_cooked" name="date_cooked">
+                <input class="input-shade border" type="date" id="date_cooked" name="date_cooked" value="{{recipe.date_cooked}}">
                 <label class="mt-1" for="thirty_min">30 Minutes or Less?:</label>
                 <div>
-                    <input class="grow-small input-shade border" type="radio" id="thirty_min_yes" name="thirty_min" value="yes">
+                    <input class="grow-small input-shade border" type="radio" id="thirty_min_yes" name="thirty_min" value="yes" {% if recipe.thirty_min == "yes" %}checked{% endif %}>
                     <label class="mr-1" for="thirty_min_yes">Yes</label>
-                    <input class="ml-1 grow-small input-shade border" type="radio" id="thirty_min_no" name="thirty_min" value="no">
+                    <input class="ml-1 grow-small input-shade border" type="radio" id="thirty_min_no" name="thirty_min" value="no" {% if recipe.thirty_min == "no" %}checked{% endif %}>
                     <label for="thirty_min_no">No</label>
                 </div>
-                <input class="grow-small submit mt-1" type="submit" value="Submit">
+                <input class="grow-small submit-btn1 mt-1" type="submit" value="Submit">
             </form>
         </div>
 </body>

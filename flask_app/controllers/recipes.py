@@ -23,7 +23,6 @@ def new_recipe():
         return redirect("/")
     
     user = User.find_user_by_id(session["user_id"])
-    flash("Recipe succesfully posted")
     return render_template("new_recipe.html", user=user)
 
 @app.post("/recipes/create")
@@ -33,8 +32,11 @@ def create_recipe():
         return redirect("/")
 
     if not Recipe.form_is_valid(request.form):
-        session["comments"] = request.form["comments"]
         return redirect("/recipes/new")
+
+    if "comments" in request.form:
+        session["comments"] = request.form["comments"]
+
 
     if Recipe.count_by_name(request.form["name"]) >= 1:
         session["comments"] = request.form["comments"]
@@ -45,7 +47,7 @@ def create_recipe():
         session.pop("comments")
 
     Recipe.create(request.form)
-
+    flash("Recipe succesfully posted")
     return redirect("/recipes/all")
 
 @app.get("/recipes/<int:recipe_id>")

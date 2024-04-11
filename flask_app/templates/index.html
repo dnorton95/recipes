@@ -8,11 +8,32 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Caprasimo&family=Great+Vibes&family=Righteous&family=Shrikhand&family=Silkscreen:wght@400;700&family=WindSong:wght@400;500&display=swap" rel="stylesheet">
   </head>
-  <body class="quicksand">
-    <div class="fc-offwhite d-flex-start">
-        <h1 class="fs-header-xlarge ml-5">Recipe Share</h1>
+
+  <style>
+    .login-container {
+        border-style: solid;
+        border-radius: 15px;
+        border-color: yellow;
+        background-image: url("{{ url_for('static', filename='assets/cookbook_photo.jpeg') }}");
+        background-size: contain;
+    }
+</style>
+
+  <body class="shrikhand-regular">
+    <!-- HEADER -->
+    <div class="top-header neg-mb-5 great-vibes-regular d-flex-center">
+        <h1 class="neg-mb-2 fc-yellow ml-5">The Modern Times</h1>
     </div>
+    <div class="bottom-header caprasimo-regular d-flex-center">
+        <h2 class="ml-5">Community Cookbook</h2>
+    </div>
+    <!-- HEADER -->
+
+    <!-- FLASH -->
     <div class="neg-mt-3 d-flex-center d-flex-column">
         {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
                             {% if messages %}                            <!-- check if there are any messages -->
@@ -22,33 +43,60 @@
                 {% endif %}
             {% endwith %}
     </div>
-    <div class="mt-3 small-d-flex-column d-flex-around push-in">
-        <div class="d-flex-center d-flex-column">
-            <form class="p-2 border1 d-flex-center d-flex-column" action="/users/register" method="POST">
-                <h2 class="neg-mt-1">Register:</h2>
-                <label for="first_name">First Name:</label>
-                <input class="input-shade border" type="text" id="first_name" name="first_name">
-                <label class="mt-1" for="last_name">Last Name:</label>
-                <input class="input-shade border" type="text" id="last_name" name="last_name">
-                <label class="mt-1" for="email">Email:</label>
-                <input class="input-shade border" type="text" id="email" name="email">
-                <label class="mt-1" for="password">Password:</label>
-                <input class="input-shade border" type="password" id="password" name="password">
-                <label class="gt-1" for="password_confirm">Confirm Password:</label>
-                <input class="input-shade border" type="password" id="password_confirm" name="password_confirm">
-                <input class="grow-small submit-btn1 mt-1" type="submit" value="Submit">
-            </form>
-        </div>
-        <div class="d-flex-column d-flex-center">
-            <form class="p-3 border1 d-flex-column d-flex-center" action="/users/login" method="POST">
-                <h2 class="neg-mt-1">Log In:</h2>
-                <label for="email">Email:</label>
-                <input class="input-shade border" type="text" id="email" name="email">
-                <label for="password">Password:</label>
-                <input class="input-shade border" type="password" id="password" name="password">
-                <input class="grow-small mt-1 submit-btn1" type="submit" value="Submit">
-            </form>
+    <!-- FLASH -->
+
+    <!-- BODY -->
+    <div class="body-container double-border">
+        <div class="double-border">
+            <div class= "login-container mt-5 small-d-flex-column d-flex-around">
+                <!-- REG -->
+                <div class="mlp4 flex1 d-flex-center d-flex-column">
+                    <form class="p-2 border1 d-flex-center d-flex-column" action="/users/register" method="POST">
+                        <h2 class="neg-mt-1">Register:</h2>
+                        <label for="first_name">First Name:</label>
+                        <input class="input-shade border" type="text" id="first_name" name="first_name">
+                        <label class="mt-1" for="last_name">Last Name:</label>
+                        <input class="input-shade border" type="text" id="last_name" name="last_name">
+                        <label class="mt-1" for="email">Email:</label>
+                        <input class="input-shade border" type="text" id="email" name="email">
+                        <label class="mt-1" for="password">Password:</label>
+                        <input class="input-shade border" type="password" id="password" name="password">
+                        <div id="passwordAlert" style="margin-top: 2px; font-size: 8px; background-color: white; position: relative; display: none; color: red;"></div>
+                        <label class="gt-1" for="password_confirm">Confirm Password:</label>
+                        <input class="input-shade border" type="password" id="password_confirm" name="password_confirm">
+                        <input class="grow-small submit-btn1 mt-1" type="submit" value="Submit">
+                    </form>
+                </div>
+                <!-- REG -->
+                <!-- LOGIN -->
+                <div class="mrp4 flex1 d-flex-column d-flex-center">
+                    <form class="p-3 border1 d-flex-column d-flex-center" action="/users/login" method="POST">
+                        <h2 class="neg-mt-1">Log In:</h2>
+                        <label for="email">Email:</label>
+                        <input class="input-shade border" type="text" id="email" name="email">
+                        <label for="password">Password:</label>
+                        <input class="input-shade border" type="password" id="password" name="password">
+                        <input class="grow-small mt-1 submit-btn1" type="submit" value="Submit">
+                    </form>
+                </div>
+                <!-- LOGIN -->
+            </div>
         </div>
     </div>
+    <!-- BODY -->
+    <script>
+        document.getElementById('password').addEventListener('focus', function() {
+            // Get the password input element
+            var passwordInput = document.getElementById('password');
+
+            // Display alert message if password length is less than 8 characters
+            if (passwordInput.value.length < 8) {
+                document.getElementById('passwordAlert').innerHTML = "Password must be at least 8 characters<br>long and contain at least one number.";
+                document.getElementById('passwordAlert').style.display = 'block';
+            } else {
+                document.getElementById('passwordAlert').style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>

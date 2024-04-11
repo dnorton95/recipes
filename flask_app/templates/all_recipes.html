@@ -8,69 +8,111 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Caprasimo&family=Great+Vibes&family=Righteous&family=Shrikhand&family=Silkscreen:wght@400;700&family=WindSong:wght@400;500&display=swap" rel="stylesheet">
   </head>
-  <body class="pr-3 pl-3 quicksand">
-    <div class="mr-5 ml-5 mt-1 d-flex-between fs-header-medium fc-offwhite">
-        <div class="flex2">
+
+  <style>
+    .recipes-container {
+        border-style: solid;
+        border-radius: 15px;
+        border-color: yellow;
+        background-image: url("{{ url_for('static', filename='assets/all_recipes_image.jpeg') }}");
+        background-size: contain;
+    }
+</style>
+
+  <body class="pr-3 pl-3 shrikhand-regular">
+        <!-- HEADER -->
+        <div class="d-flex-between">
+          <div class="">
+            <div class="top-header neg-mb-5 great-vibes-regular d-flex-center">
+              <h1 class="neg-mb-2 fc-yellow ml-5">The Modern Times</h1>
+                  </div>
+                  <div class="bottom-header caprasimo-regular d-flex-center">
+              <h2 class="ml-5">Community Cookbook</h2>
+                  </div>
+          </div>
+          
+            <div class="d-flex-around">
+              <div class=" wiggle">
+                <a class="move-btn-1" href="/recipes/new">Add Recipe</a>
+              </div>
+              <div class="ml-2">
+                <form role="logout" action="/users/logout">
+                 <button class="wiggle submit-btn1 " type="submit">Log Out</button>
+                </form>
+              </div>
+            </div>
+        </div>
+      <!-- HEADER -->
+
+      
+    <div class="neg-mb-3 fc-yellow d-flex-center text-center fs-header-medium fc-offwhite">
           <h1 class="fs-header-large">Welcome, {{user.first_name}}!</h1>
-        </div>
-        <div class="quicksand grow-small">
-          <a class="move-btn-1" href="/recipes/new">Add Recipe</a>
-        </div>
-        <div class="ml-2">
-          <form role="logout" action="/users/logout">
-            <button class="grow-small submit-btn1 quicksand" type="submit">Log Out</button>
-          </form>
-      </div>
     </div>
-    <div class="d-flex-column">
-      <div class="fc-khaki text-center">
-        <h2>All Recipes</h2>
-      </div>
-      <div class="neg-mt-3 d-flex-center d-flex-column">
-        {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
-                            {% if messages %}                            <!-- check if there are any messages -->
-                                {% for message in messages %}            <!-- loop through the messages -->
-                        <p>{{message}}<span class="grow-small ml-2 close-btn" onclick="this.parentElement.style.display='none';">&times;</span> </p>                   <!-- display each message in a paramraph tag -->
-                                {% endfor %}
-                {% endif %}
-            {% endwith %}
-      </div>
-      <div class="mr-4 ml-4 d-flex-center d-flex-column">
-        <table class="table-border">
-          <thead>
-              <tr>
-                  <th>Name</th>
-                  <th>30 Minutes or Less?</th>
-                  <th>User</th>
-                  <th>Actions</th>
-              </tr>
-          </thead>
-          <tbody>
-              {% for recipe in recipes %}
-                  <tr>
-                      <td>{{ recipe.name }}</td>
-                      <td>{{ recipe.thirty_min }}</td>
-                      <td>{{ recipe.user.first_name }} {{ recipe.user.last_name }}</td>
-                      <td class="d-flex-between">
-                          {% if recipe.user_id != user.id %}
-                              <a class="mr-2" href="/recipes/{{ recipe.id }}">View Recipe</a>
-                          {% else %}
-                              <a class="mr-2" href="/recipes/{{ recipe.id }}">View Recipe</a>
-                              <a class="mr-2" href="/recipes/{{ recipe.id }}/edit">Edit</a>
-                              <form class="delete-recipe-form" action="/recipes/{{ recipe.id }}/delete" method="POST">
-                                <!-- Add any necessary hidden fields or additional form elements here -->
-                                <button class="hidden-btn" type="submit">Delete Recipe</button>
-                            </form>
-                          {% endif %}
-                      </td>
-                  </tr>
-              {% endfor %}
-          </tbody>
-      </table>
-      </div>
-  </div>
+    <div class="mbp3 mrp3 mlp3 double-border">
+      <div class="double-border recipes-container d-flex-column">
+        <div class="text-shadow1 neg-mb-3 fc-khaki text-center">
+          <h2>All Recipes</h2>
+        </div>
+        <div class="neg-mt-5 d-flex-center d-flex-column">
+          {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
+                              {% if messages %}                            <!-- check if there are any messages -->
+                                  {% for message in messages %}            <!-- loop through the messages -->
+                          <p>{{message}}<span class="grow-small ml-2 close-btn" onclick="this.parentElement.style.display='none';">&times;</span> </p>                   <!-- display each message in a paramraph tag -->
+                                  {% endfor %}
+                  {% endif %}
+              {% endwith %}
+        </div>
+        <div class="mp1 d-flex-center d-flex-column">
+          <table class="table-border1">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Chef</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for recipe in recipes %}
+                    <tr>
+                        <td>{{ recipe.name }}</td>
+                        <td>{{ recipe.user.first_name }} {{ recipe.user.last_name }}</td>
+                        <td class="d-flex-between">
+                            {% if recipe.user_id != user.id %}
+                                <a class="mr-2" href="/recipes/{{ recipe.id }}">View Recipe</a>
+                            {% else %}
+                                <a class="mr-2" href="/recipes/{{ recipe.id }}">View Recipe</a>
+                                <a class="mr-2" href="/recipes/{{ recipe.id }}/edit">Edit</a>
+                                <form id="deleteForm" class="delete-recipe-form" action="/recipes/{{ recipe.id }}/delete" method="POST">
+                                  <!-- Add any necessary hidden fields or additional form elements here -->
+                                  <button id="deleteButton" class="hidden-btn" type="submit" >Delete Recipe</button>
+                              </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+        </div>
+    </div>
   <script>
+  document.getElementById('deleteButton').addEventListener('click', function(event) {
+      // Prevent the default form submission behavior
+      event.preventDefault();
+
+      // Ask for confirmation before deleting
+      var confirmed = confirm("Are you sure you want to delete this recipe?");
+
+      // If confirmed is true, submit the form
+      if (confirmed) {
+          document.getElementById('deleteForm').submit();
+      }
+      // If confirmed is false, do nothing
+  });
     document.querySelectorAll('.delete-recipe-form').forEach(form => {
         form.addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent the default form submission behavior

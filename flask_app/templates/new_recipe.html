@@ -8,14 +8,51 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Caprasimo&family=Great+Vibes&family=Righteous&family=Shrikhand&family=Silkscreen:wght@400;700&family=WindSong:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body class="quicksand">
+<body class="shrikhand-regular">
+        <!-- HEADER -->
+        <div class="d-flex-between">
+            <div class="">
+              <div class="top-header neg-mb-5 great-vibes-regular d-flex-center">
+                <h1 class="neg-mb-2 fc-yellow ml-5">The Modern Times</h1>
+                    </div>
+                    <div class="bottom-header caprasimo-regular d-flex-center">
+                <h2 class="ml-5">Community Cookbook</h2>
+                    </div>
+            </div>
+            
+              <div class="d-flex-around mrp1">
+                <div class=" wiggle">
+                    <a class="move-btn-1" href="/recipes/all">All Recipes</a>
+                </div>
+                <div class="ml-2">
+                  <form role="logout" action="/users/logout">
+                   <button class="wiggle submit-btn1 " type="submit">Log Out</button>
+                  </form>
+                </div>
+              </div>
+          </div>
+        <!-- HEADER -->
+
+
     <div>
-        <div class="d-flex-center fc-white">
-            <h1>Add a Recipe!</h1>
-        </div>
-        <div class="d-flex-center d-flex-column">
-            <form class="p-2 border d-flex-center d-flex-column" action="/recipes/create" method="POST">
+        <div class="d-flex-center fs-header-medium fc-white">
+            <h1 class="fs-header-large">Create a New Recipe!</h1>
+      </div>
+        <div class="neg-mt-3 d-flex-center d-flex-column">
+            {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
+                                {% if messages %}                            <!-- check if there are any messages -->
+                                    {% for message in messages %}            <!-- loop through the messages -->
+                            <p>{{message}}<span class="grow-small ml-2 close-btn" onclick="this.parentElement.style.display='none';">&times;</span> </p>                   <!-- display each message in a paramraph tag -->
+                                    {% endfor %}
+                    {% endif %}
+                {% endwith %}
+          </div>
+        <div class="mbp2 d-flex-center d-flex-column">
+            <form class="p-2 border1 d-flex-center d-flex-column" action="/recipes/create" method="POST">
                 <h2 class="neg-mt-1">Recipe Creator:</h2>
                 <label for="name">Recipe Name:</label>
                 <input class="input-shade border" type="text" id="name" name="name">
@@ -33,7 +70,7 @@
                     <label for="thirty_min_no">No</label>
                 </div>                             
                 <input type="hidden" name="user_id" value="{{ user.id }}">
-                <input class="grow-small submit mt-1" type="submit" value="Submit">
+                <input class="grow-small submit-btn1 mt-1" type="submit" value="Submit">
             </form>
         </div>
     </div>
