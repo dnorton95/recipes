@@ -900,6 +900,8 @@ transform: scale(1.2);
 
 /* Media Queries for smaller screens */
 @media only screen and (max-width: 768px) {
+
+    /* INDEX */
     #header {
         margin-bottom:10%;
         margin-top: 8%;
@@ -918,7 +920,7 @@ transform: scale(1.2);
 
     #welcomeBox {
         width: 40%;
-        margin-top: 30%;
+        margin-top: 20%;
         margin-bottom: 30%;
     }
 
@@ -926,7 +928,7 @@ transform: scale(1.2);
         padding: 0;
         width: 80%;
         margin-bottom: 30%;
-        margin-top: 30%;
+        margin-top: 20%;
     }
 
     #registerForm{
